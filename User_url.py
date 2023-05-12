@@ -27,7 +27,7 @@ while True:
 # 获取完整的 HTML 页面
 html = driver.page_source
 
-
+#创建文件将数据写入
 filename = "html.txt"  # 文件名
 with open(f'1.html', "w" , encoding='utf-8') as f:
     f.write(html)
@@ -65,8 +65,14 @@ links = []
 for a in soup.find_all('a', class_='cover'):
     links.append(a['href'])
 
-
+# 将所有链接前面加上https:
 for i in range(len(links)):
     links[i] = re.sub(r'^//', 'https://', links[i])
-
 print(links)
+
+
+# 将链接保存到文件中，每个链接占一行
+with open('links.txt', 'w') as f:
+    for link in links:
+        f.write(link + '\n')
+
