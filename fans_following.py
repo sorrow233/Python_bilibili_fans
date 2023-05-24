@@ -73,5 +73,21 @@ for i in lines:
 
 # 第五部分：提取抓取到的数据的地方
 
+soup = BeautifulSoup(file_path, 'html.parser')
+# 初步抓取数据：span和a
+span_tags = soup.find_all('span', class_='fans-name')
+a_href = soup.find_all('a', class_='title')
+
+# 一次循环抓取两个数据到数据库
+for span in span_tags:
+    title = span.text
+    href = None  # 初始化href
+    for a in a_href:
+        href = a['href']
+        break  # 只获取第一个a标签的href
+    if href:
+        insert_query = "INSERT INTO links (href, title) VALUES (%s, %s)"
+        cursor.execute(insert_query, (href, title))
+
 
 # 第六部分：弄一下多线程或多进程加速，毕竟要抓取的数据量实在太大了
