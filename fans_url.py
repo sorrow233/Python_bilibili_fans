@@ -69,7 +69,7 @@ soup = BeautifulSoup(html, 'html.parser')
 
 # 提取class为cover的a标签的href
 links = []
-for a in soup.find_all('a', class_='cover'):
+for a in soup.find_all('a', class_='title'):
     href = 'https:' + a['href']
     print(href + '\n')
     with open('data/links.txt', 'a') as f:
